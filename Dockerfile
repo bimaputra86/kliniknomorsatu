@@ -27,7 +27,7 @@ RUN npm ci
 # Copy Laravel application
 COPY . .
 
-# Build Vite
+# Build Vite - production assets
 RUN npm run build && ls -la public/build && test -f public/build/manifest.json
 
 # Remove old Laravel config cache
