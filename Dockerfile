@@ -14,6 +14,8 @@ RUN composer install --no-dev --optimize-autoloader --no-interaction --no-script
 
 COPY . .
 
-ENV SERVER_NAME=:8080
+COPY Caddyfile /etc/frankenphp/Caddyfile
 
 EXPOSE 8080
+
+CMD ["frankenphp", "run", "--config", "/etc/frankenphp/Caddyfile"]
