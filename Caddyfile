@@ -1,0 +1,9 @@
+{
+    auto_https off
+}
+
+:{} {
+    root * /app/public
+    encode gzip
+    php_server
+}
