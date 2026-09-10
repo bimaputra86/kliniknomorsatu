@@ -28,7 +28,7 @@ RUN npm ci
 COPY . .
 
 # Build Vite
-RUN npm run build
+RUN npm run build && ls -la public/build && test -f public/build/manifest.json
 
 # Remove old Laravel config cache
 RUN rm -f bootstrap/cache/config.php bootstrap/cache/*.php
