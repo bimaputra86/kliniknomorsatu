@@ -14,8 +14,6 @@ RUN composer install --no-dev --optimize-autoloader --no-interaction --no-script
 
 COPY . .
 
-RUN php artisan optimize
-
-ENV SERVER_NAME=:${PORT}
+ENV SERVER_NAME=:8080
 
 EXPOSE 8080
