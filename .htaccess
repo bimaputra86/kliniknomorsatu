@@ -1,0 +1,39 @@
+<IfModule mod_rewrite.c>
+    <IfModule mod_negotiation.c>
+        Options -MultiViews -Indexes
+    </IfModule>
+
+    RewriteEngine On
+
+    # ----------------------------------------------------------------------
+    # 1. AMANKAN FOLDER & FILE SENSITIF LARAVEL
+    # ----------------------------------------------------------------------
+
+    # Blokir akses ke dotfiles/hidden files (misal .env, .git, .htaccess)
+    RewriteRule (^\.|/\.) - [F,L]
+
+    # Blokir akses ke file sensitif & konfigurasi penting
+    RewriteRule ^(composer\.json|composer\.lock|package\.json|package-lock\.json|artisan|phpunit\.xml|README\.md|vite\.config\.js|tailwind\.config\.js)$ - [F,L]
+
+    # Blokir akses langsung ke folder internal Laravel
+    RewriteRule ^(app|bootstrap|config|database|resources|routes|storage|tests|vendor)(/|$) - [F,L]
+
+    # ----------------------------------------------------------------------
+    # 2. ROUTING KE FOLDER PUBLIC
+    # ----------------------------------------------------------------------
+
+    # Direct Request ke folder public
+    RewriteCond %{REQUEST_URI} !^/public/
+    RewriteRule ^(.*)$ public/$1 [L]
+</IfModule>
+
+# Protection layer tambahan dengan FilesMatch
+<FilesMatch "^\.(env|git|htaccess|editorconfig)|(composer\.(json|lock)|package(-lock)?\.json|artisan|phpunit\.xml)$">
+    <IfModule mod_authz_core.c>
+        Require all denied
+    </IfModule>
+    <IfModule !mod_authz_core.c>
+        Order allow,deny
+        Deny from all
+    </IfModule>
+</FilesMatch>
