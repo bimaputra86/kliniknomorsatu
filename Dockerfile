@@ -2,15 +2,15 @@ FROM dunglas/frankenphp:php8.4-bookworm
 
 WORKDIR /app
 
-RUN apt-get update && apt-get install -y `
-    git unzip curl libzip-dev libpng-dev libjpeg62-turbo-dev `
+RUN apt-get update && apt-get install -y \
+    git unzip curl libzip-dev libpng-dev libjpeg62-turbo-dev \
     libfreetype6-dev libonig-dev libxml2-dev
 
-RUN docker-php-ext-install `
+RUN docker-php-ext-install \
     pdo_mysql mbstring exif pcntl bcmath gd zip
 
 # Install Node.js
-RUN curl -fsSL https://deb.nodesource.com/setup_22.x | bash - `
+RUN curl -fsSL https://deb.nodesource.com/setup_22.x | bash - \
     && apt-get install -y nodejs
 
 # Composer
